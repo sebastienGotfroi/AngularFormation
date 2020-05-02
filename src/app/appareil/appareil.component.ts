@@ -28,5 +28,4 @@ export class AppareilComponent implements OnInit {
   switchAppareil() {
     this.appareilService.switchAppareil(this.indexOfAppareil);
   }
-
 }

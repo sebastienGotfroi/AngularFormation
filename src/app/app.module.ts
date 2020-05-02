@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppareilComponent } from './appareil/appareil.component';
 import { SingleAppareilComponent } from './single-appareil/single-appareil.component';
+import { EditAppareilComponent } from './edit-appareil/edit-appareil.component';
 
 import { AppareilService } from './services/appareil.service'
 import { AuthService } from './services/auth.service';
@@ -19,7 +20,8 @@ const appRoutes: Routes = [
   {path: 'appareils', canActivate:[AuthGard], component:AppareilViewComponent},
   {path: 'appareils/:id',  canActivate:[AuthGard], component: SingleAppareilComponent},
   {path: 'auth', component: AuthComponent},
-  {path: '', component: AppareilViewComponent},
+  {path: 'edit', component: EditAppareilComponent},
+  {path: '', canActivate:[AuthGard], component: AppareilViewComponent},
   {path: 'not-found', component: FourOhFourComponent},
   {path: '**', redirectTo:'/not-found'}
 ];
@@ -30,7 +32,8 @@ const appRoutes: Routes = [
     AuthComponent,
     AppareilViewComponent,
     SingleAppareilComponent,
-    FourOhFourComponent
+    FourOhFourComponent,
+    EditAppareilComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,7 @@ const appRoutes: Routes = [
     FormsModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [AppareilService, AuthService],
+  providers: [AppareilService, AuthService, AuthGard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
