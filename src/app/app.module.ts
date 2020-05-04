@@ -11,16 +11,21 @@ import { EditAppareilComponent } from './edit-appareil/edit-appareil.component';
 import { AppareilService } from './services/appareil.service'
 import { AuthService } from './services/auth.service';
 import { AuthGard } from './services/auth-gard.service';
-import { FormsModule } from '@angular/forms';
+import { UserService } from './services/user.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthComponent } from './auth/auth.component';
 import { AppareilViewComponent } from './appareil-view/appareil-view.component';
 import { FourOhFourComponent } from './four-oh-four/four-oh-four.component';
+import { UserListComponent } from './user-list/user-list.component';
+import { NewUserComponent } from './new-user/new-user.component';
 
 const appRoutes: Routes = [
   {path: 'appareils', canActivate:[AuthGard], component:AppareilViewComponent},
   {path: 'appareils/:id',  canActivate:[AuthGard], component: SingleAppareilComponent},
   {path: 'auth', component: AuthComponent},
-  {path: 'edit', component: EditAppareilComponent},
+  {path: 'edit', canActivate:[AuthGard], component: EditAppareilComponent},
+  {path: 'users', canActivate:[AuthGard], component: UserListComponent},
+  {path: 'new-user', component: NewUserComponent },
   {path: '', canActivate:[AuthGard], component: AppareilViewComponent},
   {path: 'not-found', component: FourOhFourComponent},
   {path: '**', redirectTo:'/not-found'}
@@ -33,15 +38,18 @@ const appRoutes: Routes = [
     AppareilViewComponent,
     SingleAppareilComponent,
     FourOhFourComponent,
-    EditAppareilComponent
+    EditAppareilComponent,
+    UserListComponent,
+    NewUserComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [AppareilService, AuthService, AuthGard],
+  providers: [AppareilService, AuthService, UserService, AuthGard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
